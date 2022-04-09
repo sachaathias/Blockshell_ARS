@@ -21,7 +21,7 @@ from blockchain.chain import Block, Blockchain
 # ===== SUPPORTED COMMANDS LIST IN BLOCKSHELL ======
 # ==================================================
 SUPPORTED_COMMANDS = [
-    'dotx',
+    'new',
     'allblocks',
     'getblock',
     'help'
@@ -85,15 +85,20 @@ def processInput(cmd):
 # ==================================================
 # =========== BLOCKSHELL COMMAND METHODS ===========
 # ==================================================
-def dotx(cmd):
+def new(cmd):
     """
         Do Transaction - Method to perform new transaction on blockchain.
     """
-    txData = cmd.split("dotx ")[-1]
-    if "{" in txData:
-        txData = json.loads(txData)
-    print "Doing transaction..."
-    coin.addBlock(Block(data=txData))
+    block_data = cmd.split(" ")
+    if (len(block_data) != 6):
+        print "Error Transaction incorrect data, pls try again"
+    else:
+        print "Doing transaction..."
+        coin.addBlock(Block(uid_epita=block_data[1],
+                        email_epita=block_data[2],
+                        name=block_data[3],
+                        surname=block_data[4],
+                        major=block_data[5]))
 
 def allblocks(cmd):
     """
@@ -120,9 +125,9 @@ def help(cmd):
         Method to display supported commands in Blockshell
     """
     print "Commands:"
-    print "   dotx <transaction data>    Create new transaction"
-    print "   allblocks                  Fetch all mined blocks in blockchain"
-    print "   getblock <block hash>      Fetch information about particular block"
+    print "   new <uid,email,name,surname,major>    Create new transaction"
+    print "   allblocks                             Fetch all mined blocks in blockchain"
+    print "   getblock <block hash>                 Fetch information about particular block"
 
 def throwError(msg):
     """

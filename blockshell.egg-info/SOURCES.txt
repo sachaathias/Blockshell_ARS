@@ -1,0 +1,9 @@
+README.md
+bscli.py
+setup.py
+blockshell.egg-info/PKG-INFO
+blockshell.egg-info/SOURCES.txt
+blockshell.egg-info/dependency_links.txt
+blockshell.egg-info/entry_points.txt
+blockshell.egg-info/requires.txt
+blockshell.egg-info/top_level.txt

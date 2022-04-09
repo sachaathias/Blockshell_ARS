@@ -2,12 +2,12 @@
 # ===================================================
 # ==================== META DATA ===================
 # ==================================================
-__author__ = "Daxeel Soni"
-__url__ = "https://daxeel.github.io"
-__email__ = "daxeelsoni44@gmail.com"
+__author__ = "Sacha ATHIAS / Baptiste VINCENT / Hugo GENDARME"
+__url__ = "https://sacha.athias.fr"
+__email__ = "sacha.athias@EPITA.fr"
 __license__ = "MIT"
 __version__ = "0.1"
-__maintainer__ = "Daxeel Soni"
+__maintainer__ = "Sacha ATHIAS"
 
 # ==================================================
 # ================= IMPORT MODULES =================
@@ -18,6 +18,7 @@ import json
 from colorama import Fore, Back, Style
 import time
 import sys
+import base64
 
 # ==================================================
 # =================== BLOCK CLASS ==================
@@ -26,10 +27,15 @@ class Block:
     """
         Create a new block in chain with metadata
     """
-    def __init__(self, data, index=0):
+    def __init__(self, uid_epita, email_epita, name, surname, major, index=0):
         self.index = index
         self.previousHash = ""
-        self.data = data
+        self.uid_epita = uid_epita
+        self.email_epita = email_epita
+        self.name = name
+        self.surname = surname
+        self.picture = base64.b64encode(self.uid_epita)
+        self.major = major
         self.timestamp = str(datetime.datetime.now())
         self.nonce = 0
         self.hash = self.calculateHash()
@@ -38,7 +44,7 @@ class Block:
         """
             Method to calculate hash from metadata
         """
-        hashData = str(self.index) + str(self.data) + self.timestamp + self.previousHash + str(self.nonce)
+        hashData = str(self.index) + str(self.uid_epita) + str(self.email_epita) + str(self.name) + str(self.surname) + str(self.picture) + str(self.major) + self.timestamp + self.previousHash + str(self.nonce)
         return hashlib.sha256(hashData).hexdigest()
 
     def mineBlock(self, difficulty):
@@ -72,7 +78,12 @@ class Blockchain:
         """
             Method create genesis block
         """
-        return Block("Genesis Block")
+        uid_ = "0000"
+        email_ = "login@epita.fr"
+        name_ = "name"
+        surname_ = "surname"
+        major_ = "SRS"
+        return Block(uid_epita=uid_, email_epita=email_, name=name_, surname=surname_, major=major_)
 
     def addBlock(self, newBlock):
         """
